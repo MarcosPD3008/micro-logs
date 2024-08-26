@@ -29,7 +29,7 @@ Micro Logs Service is a Node.js application designed to handle log management us
 Before setting up the project, ensure you have the following software installed on your system:
 
 **1. Node.js**
-- **Version**: 16.x or higher
+- **Version**: 18.18.0 or higher
 - **Installation**: You can download Node.js from the [official website](https://nodejs.org/). For Linux and macOS, you might consider using a version manager like `nvm` to manage multiple Node.js versions.
 
 **2. MongoDB**

@@ -9,7 +9,7 @@ COPY package*.json ./
 COPY yarn.lock ./
 
 # Install the application dependencies
-RUN yarn install --production
+RUN yarn install
 
 # Copy the rest of the application code to the container
 COPY . .
