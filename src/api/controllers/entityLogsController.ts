@@ -1,4 +1,3 @@
-// src/api/controllers/logsController.ts
 import { Request, Response } from 'express';
 import { EntityLogService } from '../../services/entityLogs.service';
 import { FilterQuery } from 'mongoose';
@@ -8,12 +7,12 @@ const service = new EntityLogService();
 
 /**
  * @swagger
- * /api/logs:
+ * /api/entityLogs:
  *   get:
- *     summary: Retrieve all logs with optional filtering
- *     description: Retrieve a list of all entity logs from the database. You can filter the results using query parameters.
+ *     summary: Retrieve all logs with optional filtering and pagination
+ *     description: Retrieve a list of all entity logs from the database. You can filter the results using query parameters and paginate the response.
  *     tags: 
- *       - Logs
+ *       - EntityLogs
  *     parameters:
  *       - in: query
  *         name: action
@@ -31,29 +30,53 @@ const service = new EntityLogService();
  *           type: string
  *           format: date-time
  *         description: Filter logs by timestamp
+ *       - in: query
+ *         name: pageNumber
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: The page number to retrieve
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: The number of items per page
  *     responses:
  *       200:
- *         description: A list of logs
+ *         description: A paginated list of logs
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: string
- *                     description: The log ID
- *                   entityId:
- *                     type: string
- *                     description: The entity ID associated with the log
- *                   action:
- *                     type: string
- *                     description: The action performed (create, update, delete)
- *                   timestamp:
- *                     type: string
- *                     format: date-time
- *                     description: The time when the log was created
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         description: The log ID
+ *                       entityId:
+ *                         type: string
+ *                         description: The entity ID associated with the log
+ *                       action:
+ *                         type: string
+ *                         description: The action performed (create, update, delete)
+ *                       timestamp:
+ *                         type: string
+ *                         format: date-time
+ *                         description: The time when the log was created
+ *                 total:
+ *                   type: integer
+ *                   description: The total number of logs that match the filter criteria
+ *                 pageNumber:
+ *                   type: integer
+ *                   description: The current page number
+ *                 totalPages:
+ *                   type: integer
+ *                   description: The total number of pages available
  *       500:
  *         description: Error fetching logs
  *         content:
@@ -66,10 +89,17 @@ const service = new EntityLogService();
  *                 error:
  *                   type: string
  */
+
 export const getLogs = async (req: Request, res: Response) => {
     try {
+        const pageNumber = parseInt(req.query?.pageNumber as string) || 1;
+        const pageSize = parseInt(req.query?.pageSize as string) || 10;
+        
         const filters: FilterQuery<EntityLogs> = req.query;
-        const logs = await service.findAll(filters);
+        delete filters?.pageSize;
+        delete filters?.pageNumber;
+
+        const logs = await service.findAll(filters, pageNumber, pageSize);
         res.status(200).json(logs);
     } 
     catch (error:any) {
@@ -79,12 +109,12 @@ export const getLogs = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /api/logs/{id}:
+ * /api/entityLogs/{id}:
  *   get:
  *     summary: Retrieve a single log by ID
  *     description: Retrieve a specific log entry by its unique ID.
  *     tags: 
- *       - Logs
+ *       - EntityLogs
  *     parameters:
  *       - in: path
  *         name: id

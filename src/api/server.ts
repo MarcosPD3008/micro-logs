@@ -1,7 +1,6 @@
 import express, { Application } from 'express';
-import logsRoutes from './routes/entityLogs.routes';
 import { addSwagger } from './swagger';
-
+import routes from './routes/routes';
 
 export const runServer = async () => {
     const app: Application = express();
@@ -9,7 +8,7 @@ export const runServer = async () => {
     app.use(express.json());
     
     // Add Routes
-    app.use('/api/logs', logsRoutes);
+    app.use('/api', routes);
     
     addSwagger(app);
     const PORT = process.env.API_PORT || 3000;

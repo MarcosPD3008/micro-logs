@@ -1,7 +1,8 @@
-import { Schema, Document, model } from 'mongoose';
+import { Schema, Document, model, Types } from 'mongoose';
+import { Services } from './service.model';
 
 export interface EntityLogs extends Document {
-    serviceId: string;
+    service: Types.ObjectId | Services;
     entityName: string;
     action: ActionType;
     timestamp:Date;
@@ -18,7 +19,7 @@ export enum ActionType {
 
 //schema
 const EntityLogSchema = new Schema<EntityLogs>({
-    serviceId: { type: String, required: true },
+    service: { type: Schema.Types.ObjectId, ref: 'Services', required: true }, // Reference field
     entityName: { type: String, required: true },
     action: { type: String, enum: Object.values(ActionType), required: true },
     timestamp: { type: Date, default: Date.now },

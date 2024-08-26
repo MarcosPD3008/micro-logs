@@ -1,10 +1,12 @@
 import { getChannel } from '../config/rabbitmq';
 import entityLogHandler from './entityLogHandler';
+import exceptionLogHandler from './exceptionLogHandler';
 import serviceHandler from './serviceHandler';
 
 const handlers: { [key: string]: any } = {
     "service": serviceHandler,
-    "entitylog": entityLogHandler
+    "entitylog": entityLogHandler,
+    "exceptionlog": exceptionLogHandler,
 };
 
 const MAX_RETRIES = 5;
