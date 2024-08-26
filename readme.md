@@ -99,10 +99,10 @@ Before running the project, make sure to configure your environment variables. T
 To run locally, follow these steps:
 
 1. Install the project dependencies:
-   ```bash yarn ``` or ```npm install```
+   ```yarn ``` or ```npm install```
 
 2. Start the project:
-   ```bash yarn start``` or ```npm run start```
+   ```yarn start``` or ```npm run start```
 
 3. The project will be available at `http://localhost:{your-env-port}` and documentation in `http://localhost:{your-env-port}/api-docs`.
 
