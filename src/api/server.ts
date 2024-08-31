@@ -1,13 +1,15 @@
 import express, { Application } from 'express';
+import cors from 'cors';  // Import the CORS package
 import { addSwagger } from './swagger';
 import routes from './routes/routes';
 
 export const runServer = async () => {
     const app: Application = express();
     
+    app.use(cors());
+    
     app.use(express.json());
     
-    // Add Routes
     app.use('/api', routes);
     
     addSwagger(app);
