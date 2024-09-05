@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { connectRabbitMQ } from "./config/rabbitmq";
 import { Consume } from "./consumer";
 import { runServer } from "./api/server";
+import { EntityMockData, exceptionsMockData } from "./services/mock.service";
 
 const run = async () => {
     try{
@@ -13,6 +14,9 @@ const run = async () => {
         await Consume(process.env.QUEUE_NAME as string);
         await runServer();
         console.log('Server started');
+
+        // EntityMockData();
+        // exceptionsMockData();
     }
     catch(err){
         console.error('Error running app:', err);

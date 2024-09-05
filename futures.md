@@ -1,8 +1,5 @@
 # Future Features
 
-- **Entity Changes:** 
-  - Implemented using [json-diff-ts](https://www.npmjs.com/package/json-diff-ts).
-
 - **Base Response:**
   - Enhanced response structure to include a base response format, not just returning error codes.
 
@@ -11,4 +8,8 @@
 
 - **Report Data:**
   - Prepare data to FE reports
+
+- **Preservce time**
+  - Delete logs after x days
+  - Can be configured by service
 

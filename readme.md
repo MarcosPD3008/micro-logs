@@ -122,6 +122,8 @@ To run using Docker, follow these steps:
 ## API Documentation
 The API documentation is available at `http://localhost:{your-env-port}/api-docs`.
 
+## Consumer Usage
+For usage information go to [docs folder](./docs)
 
 ## Test
 
